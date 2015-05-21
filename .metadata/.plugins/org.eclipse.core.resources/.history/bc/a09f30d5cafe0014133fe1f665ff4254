@@ -1,0 +1,35 @@
+package com.example.nasa_e;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.XMLReader;
+
+import android.os.AsyncTask;
+
+public class RetrieveFeedTask extends AsyncTask<Params, Progress, Result> {
+    private Exception exception;
+
+    protected IotdHandler doInBackground() {
+        try {
+            
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser parser = factory.newSAXParser();
+            XMLReader xmlreader = parser.getXMLReader();
+            IotdHandler theRSSHandler = new IotdHandler();
+            xmlreader.setContentHandler(theRSSHandler);
+            URL url= new URL(theRSSHandler.url);
+            InputSource is = new InputSource(url.openStream());
+            xmlreader.parse(is);
+            return IotdHandler;
+        } catch (Exception e) {
+            this.exception = e;
+            return null;
+        }
+    }
+
+    protected void onPostExecute(RSSFeed feed) {
+        // TODO: check this.exception 
+        // TODO: do something with the feed
+    }
+}
