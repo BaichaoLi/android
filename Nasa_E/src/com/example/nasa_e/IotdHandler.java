@@ -75,6 +75,13 @@ public class IotdHandler extends DefaultHandler {
 				inUrl = true; 
 				int attri_lens = attributes.getLength(); 
 				imgurl = attributes.getValue("url");
+				if(image != null && !image.isRecycled()){ 
+			        // 回收并且置为null
+			        image.recycle(); 
+			        image = null; 
+			        } 
+				System.gc();
+				
 				image = getBitmap(imgurl);
 				} else { inUrl = false; }
 		}

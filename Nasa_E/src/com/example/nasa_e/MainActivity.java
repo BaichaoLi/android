@@ -9,6 +9,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,12 +23,12 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
 	
 	private static int iTimes = 1;
+	private ProgressDialog dialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
         refresh(iTimes);
     }
 
@@ -52,12 +53,14 @@ public class MainActivity extends ActionBarActivity {
     
     public void onRefreshClicked(View view)
     {
+ 
     	iTimes = (++iTimes) % 5; 
     	refresh(iTimes);
     }
     
     private void refresh(int time)
     {
+       	dialog =  ProgressDialog.show(this, "loading", "loading the Nasa image of the day");
         new RetrieveFeedTask().execute(time);
     }
     
@@ -78,6 +81,7 @@ public class MainActivity extends ActionBarActivity {
     }
     
     class RetrieveFeedTask extends AsyncTask<Integer, Void, IotdHandler> {
+    	
 
         private Exception exception;
         @Override
@@ -104,6 +108,9 @@ public class MainActivity extends ActionBarActivity {
             // TODO: check this.exception 
             // TODO: do something with the feed
             resetDisplay(handler.getTitle(), handler.getDate(), handler.getImage(), handler.getDescription().toString());
+            if(dialog != null)
+            	dialog.dismiss();
+
             
         }
 

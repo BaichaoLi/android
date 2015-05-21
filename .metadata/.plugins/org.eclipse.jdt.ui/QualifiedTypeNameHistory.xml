@@ -17,4 +17,5 @@
 <fullyQualifiedTypeName name="org.xml.sax.InputSource"/>
 <fullyQualifiedTypeName name="android.os.AsyncTask"/>
 <fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="android.app.ProgressDialog"/>
 </qualifiedTypeNameHistroy>
